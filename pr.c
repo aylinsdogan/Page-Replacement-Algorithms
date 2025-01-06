@@ -7,9 +7,9 @@
 
 typedef struct {
 	int pageNum;
-	int writingTime; // FIFO
-	int accesTime; // LRU
-	int readCount; // LFU
+	int writingTime; 
+	int accesTime; 
+	int readCount; 
 } Page;
 
 typedef struct {
@@ -29,7 +29,7 @@ void clearMemory(Memory *memory) {
 }
 
 
-int FIFO(int size, int *process_accesses, Memory *memory) { // belleğe ilk yazılan çıksın
+int FIFO(int size, int *process_accesses, Memory *memory) { 
 	int pageFault=0;
 	int index = 0;
 	
@@ -113,7 +113,7 @@ int LFU(int size, int *process_accesses, Memory *memory) {
 	return pageFault;
 }
 
-int LRU(int size, int *process_accesses, Memory *memory) { // en az okunulan çıksın
+int LRU(int size, int *process_accesses, Memory *memory) { 
 	int pageFault=0;
 	int index = 0;
 	
@@ -160,7 +160,7 @@ int LRU(int size, int *process_accesses, Memory *memory) { // en az okunulan ç�
 	return pageFault;
 }
 
-int Random(int size, int *process_accesses, Memory *memory) { // random bir sayfa çıkacak
+int Random(int size, int *process_accesses, Memory *memory) { 
 	int pageFault=0;
 	int index = 0;
 	
@@ -186,7 +186,7 @@ int Random(int size, int *process_accesses, Memory *memory) { // random bir sayf
 				}
 			}
 			if(boo == 0){
-				int randomNum = rand() % memory->capacity; // 0-capacity arası random sayı
+				int randomNum = rand() % memory->capacity; 
 				memory->Pages[randomNum].pageNum = process_accesses[i];
 			}
 		}
@@ -200,7 +200,6 @@ int allFrequency(int *process_accesses, int size,int num){
 	
 	for(int i=0;i < size; i++){
 		if(num == process_accesses[i]){
-		
 			frequency++;
 		}
 	}
@@ -263,7 +262,7 @@ int Weighted_Random(int size, int *process_accesses, Memory *memory) {
 				random_value = (double)rand()/RAND_MAX*smallBigSum;
 				smallBigSum = 0.0;
 				for(int z=0; z < memory->capacity; z++){
-					smallBigSum+=tmpArr[memory->Pages[z].pageNum]; // CDF
+					smallBigSum+=tmpArr[memory->Pages[z].pageNum]; 
 					if(smallBigSum>=random_value){
 						loc=z;
 						break;
@@ -296,7 +295,7 @@ int main(int argc, char *argv[]) {
     
     Memory *memory = malloc(sizeof(Memory));
     memory->numOfPage = 0;
-    memory->capacity = numOfPages; // 3
+    memory->capacity = numOfPages; 
     memory->Pages = malloc(memory->capacity * sizeof(Page));
     
     FILE *file = fopen("input.txt", "r");
@@ -312,7 +311,6 @@ int main(int argc, char *argv[]) {
     while (getline(&line, &len, file) != -1) {
 
         line[strcspn(line, "\n")] = '\0';
-	
 		
 	int *process_acsesses = NULL;
         int size = 0;
@@ -337,18 +335,14 @@ int main(int argc, char *argv[]) {
 		printf("FIFO: %d \n", fifo);
 		clearMemory(memory);
 		
-		//LRU
-		clearMemory(memory);
 		int lru = LRU(size,process_acsesses,memory);
 		printf("LRU: %d \n", lru);
 		clearMemory(memory);
 		
-		//LRU
 		int lfu = LFU(size,process_acsesses,memory);
 		printf("LFU: %d \n", lfu);
 		clearMemory(memory);
-		
-				// RANDOM
+			
 		float averageOfRandom=0;
 		for(int z=0; z < 1000 ; z++){
 			clearMemory(memory);
@@ -357,7 +351,6 @@ int main(int argc, char *argv[]) {
 		printf("Random: %f \n", (averageOfRandom/1000));
 		clearMemory(memory);
 		
-		// WEIGHTED_RANDOM
 		double averageOfWRandom=0;
 		for(int z=0; z < 1000 ; z++){
 			clearMemory(memory);
