@@ -1,5 +1,4 @@
 # Page-Replacement-Algorithms
-# Page Replacement Algorithms Simulator
 
 This C program simulates the most common page replacement algorithms used in operating systems to manage virtual memory. The program implements the following page replacement algorithms:
 
@@ -14,7 +13,7 @@ The program reads a list of page accesses from a file (`input.txt`) and applies 
 ## Requirements
 
 - A C compiler (e.g., GCC)
-- A Linux/Unix-based operating system (for `getline()` function)
+- A Linux/Unix-based operating system
 - A file named `input.txt` containing page access sequences.
 
 Example input.txt 
